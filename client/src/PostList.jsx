@@ -7,7 +7,7 @@ const PostList = () => {
   const [postList, setPostList] = useState({});
 
   const fetchPost = async () => {
-    const res = await axios.get('http://localhost:4002/post');
+    const res = await axios.get('http://localhost:4002/post'); // get request to query server
     setPostList(res.data);
   };
 

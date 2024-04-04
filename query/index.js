@@ -8,6 +8,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 const post = {};
+
 const eventHandler = (type, data) => {
   if (type === 'PostCreated') {
     const { postId, title } = data;
@@ -47,6 +48,12 @@ app.post('/events', (req, res, next) => {
 
 app.listen(4002, async() => {
   console.log('server listening on port: 4002');
-  const {data} = await axios.get('http://localhost:4005/events');
-  console.log('get all bus events: ', data.type)
+  try {
+    const {data} = await axios.get('http://localhost:4005/events');
+    console.log('get all bus events: ', data)
+    data.forEach(e => eventHandler(e.type, e.data));
+
+  } catch(err){
+    console.log(err)
+  }
 });
